@@ -13,30 +13,27 @@ fn main() {
     println!("High: {}", high);
 
     let mut rng = rand::thread_rng();
-
     let magic_number = rng.gen_range(low..high);
+    println!("magic_number = {}", magic_number);
 
-    println!("Magic number: {}", magic_number);
-
-    let mut line = String::new();
-    let mut guess: i32 = magic_number - 4;
-
-    while guess != magic_number {
-        line.clear();
-
+    loop {
+        let mut line = String::new();
         println!("Enter guess: ");
         io::stdin()
             .read_line(&mut line)
             .expect("Failed to read line");
 
-        guess = line.trim().parse().expect("Please type a number!");
+        let guess: i32 = line.trim().parse().expect("Please type a number!");
 
         println!("guess = {}", guess);
 
         match guess.cmp(&magic_number) {
             Ordering::Less => println!("Too low!"),
             Ordering::Greater => println!("Too high!"),
-            Ordering::Equal => println!("You win!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;
+            },
         }
     }
 }
